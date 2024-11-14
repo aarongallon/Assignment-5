@@ -10,6 +10,7 @@ curr.execute('''
         entry_id PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER NOT NULL,
         Name TEXT NOT NULL,
+        Age INTEGER NOT NULL,
         Phone_Number TEXT NOT NULL,
         Security_Level INTEGER NOT NULL,
         Login_Password TEXT NOT NULL
