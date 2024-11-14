@@ -10,6 +10,7 @@ def home():
 def list():
     return render_template('list.html')
 
+@app.route('/add_baker')
 def add_baker():
     if request.method == 'POST':
         # Retrieve form data
@@ -19,7 +20,7 @@ def add_baker():
         security_level = request.form.get('SecurityLevel', '').strip()
         password = request.form.get('Password', '').strip()
 
-    return render_template
+    return render_template('add_baker.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
