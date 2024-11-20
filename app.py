@@ -22,6 +22,10 @@ def add_baker():
 
     return render_template('add_baker.html')
 
+@app.route('/results')
+def show_results():
+    return render_template('results.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 
