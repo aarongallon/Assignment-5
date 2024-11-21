@@ -44,32 +44,26 @@ def add_baker():
 
         errors = False
         if not name:
-            print("64")
             flash("You cannot enter an empty name.")
             errors = True
         
         if not phone_number:
-            print("69")
             flash("You cannot enter an empty phone number")
             errors = True
         
         if not age.isdigit() or not (0 < int(age) < 121):
-            print("74")
             flash("The age must be a whole number greater than 0 and less than 121.")
             errors = True
         
         if not security_level.isdigit() or int(security_level) not in [1,2,3]:
-            print("79")
             flash("The SecurityLevel must be a numeric value between 1 and 3")
             errors = True
         
         if not password:
-            print("84")
             flash("You cannot enter an empty password")
             errors = True
 
         if errors:
-            print("89")
             return redirect(url_for('success'))
         
         conn = sqlite3.connect('./baking_info.db')
@@ -106,7 +100,7 @@ def init_resultDB():
 
     curr.execute('''
         CREATE TABLE IF NOT EXISTS Baking_Results(
-            Entry_Id INTEGER NOT NULL
+            Entry_Id INTEGER NOT NULL,
             User_Id INTEGER NOT NULL,
             Name TEXT NOT NULL,
             ExcellentV INTEGER NOT NULL,
@@ -116,23 +110,18 @@ def init_resultDB():
                  ''')
     conn.commit()
 
-    curr.executescript(''' 
-    Insert Into Baking_Results Values(
-    1, 1,'Whoot Whoot Brownies',1,2,4);
-    
-    
-    Insert Into Baking_Results Values(
-    2, 2,'Cho Chip Cookies', 4,1,2);
-                       
-    Insert Into Baking_Results Values(
-    3, 3,'Cho Cake', 2,4,1);
-                       
-    Insert Into Baking_Results Values(
-    4, 1,'Sugar Cookies',2,2,1);
-    
-    ''')
-    conn.commit()
-    conn.close()
+    curr.execute("SELECT COUNT(*) FROM Baking_Results")
+    if curr.fetchone()[0] == 0:  # If the table is empty
+        curr.executescript('''
+        INSERT INTO Baking_Results VALUES
+        (1, 1, 'Whoot Whoot Brownies', 1, 2, 4),
+        (2, 2, 'Cho Chip Cookies', 4, 1, 2),
+        (3, 3, 'Cho Cake', 2, 4, 1),
+        (4, 1, 'Sugar Cookies', 2, 2, 1);
+        ''')
+        conn.commit()
+    else:
+        conn.close()
     
 
 def get_results():
@@ -140,7 +129,7 @@ def get_results():
     conn.row_factory = sqlite3.Row 
     cursor = conn.cursor()
     
-    cursor.execute("SELECT  Entry_Id, User_Id, Name, ExcellentV, OKV, BadV FROM Baking_Results")
+    cursor.execute("SELECT Entry_Id, User_Id, Name, ExcellentV, OKV, BadV FROM Baking_Results")
     users = cursor.fetchall()
     conn.close()
     return users
@@ -156,7 +145,7 @@ def list():
 def show_results():
     users = get_results()
     print(users)
-    return render_template('results.html', users=users)
+    return render_template('results.html', Entrys=users)
 
 
 if __name__ == '__main__':
