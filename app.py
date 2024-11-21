@@ -17,6 +17,8 @@ def init_db():
         Phone_Number TEXT NOT NULL,
         Security_Level INTEGER NOT NULL,
         Login_Password TEXT NOT NULL
+        
+        
     )
     ''')
     conn.commit()  # Commit changes
