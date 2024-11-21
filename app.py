@@ -98,6 +98,16 @@ def get_users_list():
     users = cursor.fetchall()
     conn.close()
     return users
+
+def get_results():
+    conn = sqlite3.connect()
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT , Entry_Id, User_Id, Name, ExcellentV, OKV, BadV FROM Baking_Info")
+    users = cursor.fetchall()
+    conn.close()
+    return users
     
 @app.route('/tableview')
 def list():
@@ -108,7 +118,10 @@ def list():
 
 @app.route('/results')
 def show_results():
-    return render_template('results.html')
+    users = get_results()
+    print(users)
+    return render_template('results.html', users=users)
+
 
 if __name__ == '__main__':
     init_db()
