@@ -106,7 +106,7 @@ def init_resultDB():
 
     curr.execute('''
         CREATE TABLE IF NOT EXISTS Baking_Results(
-            Entry_Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Entry_Id INTEGER NOT NULL
             User_Id INTEGER NOT NULL,
             Name TEXT NOT NULL,
             ExcellentV INTEGER NOT NULL,
@@ -118,17 +118,17 @@ def init_resultDB():
 
     curr.executescript(''' 
     Insert Into Baking_Results Values(
-    1,1,'Whoot Whoot Brownies',1,2,4);
+    1, 1,'Whoot Whoot Brownies',1,2,4);
     
     
     Insert Into Baking_Results Values(
-    2,2,'Cho Chip Cookies', 4,1,2);
+    2, 2,'Cho Chip Cookies', 4,1,2);
                        
     Insert Into Baking_Results Values(
-    3,3,'Cho Cake', 2,4,1);
+    3, 3,'Cho Cake', 2,4,1);
                        
     Insert Into Baking_Results Values(
-    4,1,'Sugar Cookies',2,2,1);
+    4, 1,'Sugar Cookies',2,2,1);
     
     ''')
     conn.commit()
@@ -136,11 +136,11 @@ def init_resultDB():
     
 
 def get_results():
-    conn = sqlite3.connect()
+    conn = sqlite3.connect('./baking_result.db ')
     conn.row_factory = sqlite3.Row 
     cursor = conn.cursor()
     
-    cursor.execute("SELECT , Entry_Id, User_Id, Name, ExcellentV, OKV, BadV FROM Baking_Info")
+    cursor.execute("SELECT  Entry_Id, User_Id, Name, ExcellentV, OKV, BadV FROM Baking_Results")
     users = cursor.fetchall()
     conn.close()
     return users
@@ -161,5 +161,6 @@ def show_results():
 
 if __name__ == '__main__':
     init_db()
+    init_resultDB()
     app.run(debug=True)
 
