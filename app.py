@@ -99,6 +99,42 @@ def get_users_list():
     conn.close()
     return users
 
+
+def init_resultDB():
+    conn = sqlite3.connect('./baking_result.db')
+    curr = conn.cursor()
+
+    curr.execute('''
+        CREATE TABLE IF NOT EXISTS Baking_Results(
+            Entry_Id INTEGER PRIMARY KEY AUTOINCREMENT,
+            User_Id INTEGER NOT NULL,
+            Name TEXT NOT NULL,
+            ExcellentV INTEGER NOT NULL,
+            OkV INTEGER NOT NULL,
+            BadV INT NOT NULL
+                 )
+                 ''')
+    conn.commit()
+
+    curr.executescript(''' 
+    Insert Into Baking_Results Values(
+    1,1,'Whoot Whoot Brownies',1,2,4);
+    
+    
+    Insert Into Baking_Results Values(
+    2,2,'Cho Chip Cookies', 4,1,2);
+                       
+    Insert Into Baking_Results Values(
+    3,3,'Cho Cake', 2,4,1);
+                       
+    Insert Into Baking_Results Values(
+    4,1,'Sugar Cookies',2,2,1);
+    
+    ''')
+    conn.commit()
+    conn.close()
+    
+
 def get_results():
     conn = sqlite3.connect()
     conn.row_factory = sqlite3.Row 
