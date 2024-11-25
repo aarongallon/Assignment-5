@@ -125,7 +125,7 @@ def init_resultDB():
     
 
 def get_results():
-    conn = sqlite3.connect('./baking_result.db ')
+    conn = sqlite3.connect('./baking_result.db')
     conn.row_factory = sqlite3.Row 
     cursor = conn.cursor()
     
