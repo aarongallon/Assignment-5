@@ -24,6 +24,9 @@ def init_db():
     conn.commit()  # Commit changes
     conn.close()
 
+@app.route('/login',methods = ['POST', 'GET'])
+def login():
+    return render_template('home.html')
 
 @app.route('/')  #first page
 def home():
